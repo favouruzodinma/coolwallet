@@ -1,0 +1,100 @@
+.top{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 1rem;
+}
+.top >span {
+    font-size: 26px;
+}
+.inputi{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+}
+.inputi > input{
+    width: 85% !important;
+    border-radius: 20px !important;
+}
+.second , .third{
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 85%;
+}
+.second > .second2{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 23%;
+    color: white;
+}
+.third > a{
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    border-radius: 50%;
+    border: solid white 1px;
+}
+.fourth{
+    margin-top: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 72%;
+}
+li{
+    list-style-type: none;
+}
+.fourth a{
+    color: white;
+    font-size: 18px;
+}
+.fourth a:hover{
+    border-bottom: 3px solid green;
+    color: white;
+    padding-bottom: 10px;
+}
+a{
+    color: white !important;
+}
+.coin{
+    margin-top: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 90%;
+}
+.coin > .coinimg{
+    display: flex;
+}
+.coinimg > div{
+    padding-left:10px;
+}
+.coinimg > div > .name{
+    position: relative;
+    left: -15px;
+}
+.coin small {
+    font-size: 14px;
+}
+.warning{
+    border-radius: 5px;
+    margin: 0 20px;
+    font-size: 14px;
+    background-color: rgba(255, 255, 0, 0.247) !important;
+}
+.price{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.history{
+    overflow-y: auto;
+    height: 50%;
+}
