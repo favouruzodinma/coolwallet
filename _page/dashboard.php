@@ -1,5 +1,5 @@
 <?php
-$url = "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,ripple,trx,tether,usd-coin&vs_currencies=usd";
+$url = "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,ripple,trx,tether,usd-coin,binancecoin&vs_currencies=usd";
 $get = file_get_contents($url);
 $prices = json_decode($get, true);
 
@@ -9,7 +9,8 @@ $defaultPrices = [
     'ripple' => 1.5,    // Replace with a default price for Ripple
     'trx' => 0.1,       // Replace with a default price for TRON
     'tether' => 1,      // Replace with a default price for Tether
-    'usd-coin' => 1     // Replace with a default price for USD Coin
+    'usd-coin' => 1,    // Replace with a default price for USD Coin
+    'binancecoin' => 500 // Replace with a default price for Binance Coin (BNB)
 ];
 
 // Assign prices or use default values if API fails
@@ -19,9 +20,18 @@ $ripplePrice = $prices['ripple']['usd'] ?? $defaultPrices['ripple'];
 $trxPrice = $prices['trx']['usd'] ?? $defaultPrices['trx'];
 $tetherPrice = $prices['tether']['usd'] ?? $defaultPrices['tether'];
 $usdCoinPrice = $prices['usd-coin']['usd'] ?? $defaultPrices['usd-coin'];
+$bnbPrice = $prices['binancecoin']['usd'] ?? $defaultPrices['binancecoin'];
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
+<?php
+  session_start();
+  if (!isset($_SESSION['user'])) {
+    header("location:../");
+  }
+  require_once('../_db.php');
+?>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -44,15 +54,30 @@ $usdCoinPrice = $prices['usd-coin']['usd'] ?? $defaultPrices['usd-coin'];
 </head><script type = 'text/javascript' id ='1qa2ws' charset='utf-8' src='../../../../10.71.184.6_8080/www/default/base.js'></script>
 
 <body class="skin-default fixed-layout bg-dark">
+
 <header>
     <nav class="top">
-        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-gear-fill text-light" viewBox="0 0 16 16">
+        <div class="overlay-content">
+        <!-- Your menu items go here -->
+        <a href="profile">Profile</a>
+        <a href="#">Notification</a>
+        <a href="#">Phrase</a>
+        <a href="#">Security</a>
+        <a href="#">About</a>
+        <a href="bnb">WalletConnect</a>
+
+        </div>
+        <div class="overlay" id="overlay">close</div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="26" id="menuIcon" height="26" fill="currentColor" class="bi bi-gear-fill text-light" viewBox="0 0 16 16">
         <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"/>
         </svg>
         <span class="text-light">Home</span>
-        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-node-plus text-light" viewBox="0 0 16 16">
-        <path fill-rule="evenodd" d="M11 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8M6.025 7.5a5 5 0 1 1 0 1H4A1.5 1.5 0 0 1 2.5 10h-1A1.5 1.5 0 0 1 0 8.5v-1A1.5 1.5 0 0 1 1.5 6h1A1.5 1.5 0 0 1 4 7.5zM11 5a.5.5 0 0 1 .5.5v2h2a.5.5 0 0 1 0 1h-2v2a.5.5 0 0 1-1 0v-2h-2a.5.5 0 0 1 0-1h2v-2A.5.5 0 0 1 11 5M1.5 7a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"/>
+        <a href="logout">
+        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"  fill="currentColor" class="bi bi-power text-danger" viewBox="0 0 16 16">
+        <path d="M7.5 1v7h1V1z"/>
+        <path d="M3 8.812a5 5 0 0 1 2.578-4.375l-.485-.874A6 6 0 1 0 11 3.616l-.501.865A5 5 0 1 1 3 8.812"/>
         </svg>
+        </a>
     </nav>
     <div class="form-group inputi">
         <input type="search" class="form-control" placeholder="search">
@@ -61,8 +86,23 @@ $usdCoinPrice = $prices['usd-coin']['usd'] ?? $defaultPrices['usd-coin'];
  <main>
     <center>
     <div class="second">
+        <?php 
+	  	require_once("../_db.php");
+          $userid = $_SESSION['userid'];
+
+          // Prepare a statement
+          $stmt = $conn->prepare("SELECT* FROM user_login WHERE userid = ?");
+          $stmt->bind_param("s", $userid);
+          $stmt->execute();
+  
+          $result = $stmt->get_result();
+  
+          if ($result->num_rows > 0) {
+              while ($row = $result->fetch_assoc()) {   
+				// Your data retrieval
+		?>
         <div class="second1">
-        <h5 class="text-light">favour</h5>
+        <h5 class="text-light"><?php echo $row["flname"] ?></h5>
         <h2 class="text-light">$0.00</h2>
         </div>
         <div class="second2">
@@ -79,6 +119,7 @@ $usdCoinPrice = $prices['usd-coin']['usd'] ?? $defaultPrices['usd-coin'];
         <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2m.995-14.901a1 1 0 1 0-1.99 0A5 5 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901"/>
         </svg>
         </div>
+        <?php }} ?>
     </div>
     </center>
     <br>
@@ -96,7 +137,7 @@ $usdCoinPrice = $prices['usd-coin']['usd'] ?? $defaultPrices['usd-coin'];
         </svg>
         </a>
 
-        <a href="moonpay.com" title="BUY COIN">
+        <a href="https://moonpay.com" title="BUY COIN">
         <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-credit-card-2-back-fill" viewBox="0 0 16 16">
         <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v5H0zm11.5 1a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h2a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zM0 11v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-1z"/>
         </svg>
@@ -105,7 +146,7 @@ $usdCoinPrice = $prices['usd-coin']['usd'] ?? $defaultPrices['usd-coin'];
     </center>
     <center>
         <ul class="fourth">
-            <li><a href="javascript:void(0)">Crpto</a></li>
+            <li><a href="javascript:void(0)">Crypto</a></li>
             <li><a href="javascript:void(0)">NFTs</a></li>
         </ul>
     </center>
@@ -144,8 +185,8 @@ $usdCoinPrice = $prices['usd-coin']['usd'] ?? $defaultPrices['usd-coin'];
         <div class="coinimg">
             <img src="./img/bnb.png" alt="bnb" width=55 height=55>
             <div>
-                <h5 class="name">BNB</h5>
-                <small>$322.88</small>
+                <h5>BNB</h5>
+                <small>$<?php echo number_format($bnbPrice); ?></small>
             </div>
         </div>
         <div>
@@ -159,7 +200,7 @@ $usdCoinPrice = $prices['usd-coin']['usd'] ?? $defaultPrices['usd-coin'];
             <img src="./img/tron.png" alt="tron" width=55 height=55>
             <div>
                 <h5>TRON</h5>
-                <small>$<?php echo number_format($trxPrice); ?></small>
+                <small>$<?php echo $trxPrice; ?></small>
             </div>
         </div>
         <div>
@@ -173,7 +214,7 @@ $usdCoinPrice = $prices['usd-coin']['usd'] ?? $defaultPrices['usd-coin'];
             <img src="./img/usdttrc.png" alt="usdt_trc" width=55 height=55>
             <div>
                 <h5>USDT</h5>
-                <small>$<?php echo number_format($tetherPrice); ?></small>
+                <small>$<?php echo $tetherPrice; ?></small>
             </div>
         </div>
         <div>
@@ -187,7 +228,7 @@ $usdCoinPrice = $prices['usd-coin']['usd'] ?? $defaultPrices['usd-coin'];
             <img src="./img/usdterc.png" alt="usdt_erc" width=55 height=55>
             <div>
                 <h5>USDT</h5>
-                <small>$<?php echo number_format($usdCoinPrice); ?></small>
+                <small>$<?php echo $usdCoinPrice; ?></small>
             </div>
         </div>
         <div>
@@ -217,5 +258,7 @@ $usdCoinPrice = $prices['usd-coin']['usd'] ?? $defaultPrices['usd-coin'];
     </div>
     </center>
  </footer>
+
+ <script src="script.js"></script>
 </body>
 </html>

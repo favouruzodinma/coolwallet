@@ -42,9 +42,12 @@ $ethereumPrice = $prices['ethereum']['usd'] ?? $defaultPrices['ethereum'];
         </svg>
         </a>
         <span class="text-light">ETH <sup class="bg-dark" style="font-size:12px; background-color:blue"><small class="text-mute">COIN</ class="text-mute"></sup> </span>
-        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-node-plus text-light" viewBox="0 0 16 16">
-        <path fill-rule="evenodd" d="M11 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8M6.025 7.5a5 5 0 1 1 0 1H4A1.5 1.5 0 0 1 2.5 10h-1A1.5 1.5 0 0 1 0 8.5v-1A1.5 1.5 0 0 1 1.5 6h1A1.5 1.5 0 0 1 4 7.5zM11 5a.5.5 0 0 1 .5.5v2h2a.5.5 0 0 1 0 1h-2v2a.5.5 0 0 1-1 0v-2h-2a.5.5 0 0 1 0-1h2v-2A.5.5 0 0 1 11 5M1.5 7a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"/>
+        <a href="logout">
+        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"  fill="currentColor" class="bi bi-power text-danger" viewBox="0 0 16 16">
+        <path d="M7.5 1v7h1V1z"/>
+        <path d="M3 8.812a5 5 0 0 1 2.578-4.375l-.485-.874A6 6 0 1 0 11 3.616l-.501.865A5 5 0 1 1 3 8.812"/>
         </svg>
+        </a>
     </nav>
     <br>
 </header>
@@ -60,13 +63,13 @@ $ethereumPrice = $prices['ethereum']['usd'] ?? $defaultPrices['ethereum'];
     <br>
     <center>
         <div class="third">
-        <a href="javascript:void(0)" title="SEND COIN">
+        <a href="send_eth" title="SEND COIN">
         <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
         <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5"/>
         </svg>
         </a>
 
-        <a href="javascript:void(0)" title="RECEIVE COIN">
+        <a href="receive_eth" title="RECEIVE COIN">
         <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
         <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1"/>
         </svg>
