@@ -1,3 +1,6 @@
+.body{
+    background-color: #111315 !important;
+}
 .top{
     display: flex;
     justify-content: space-around;
@@ -31,7 +34,22 @@
     width: 23%;
     color: white;
 }
-.third > a{
+/* .third > a{
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    border-radius: 50%;
+    border: solid white 1px;
+} */
+.ree {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 2px;
+}
+.ree > a{
     padding: 15px;
     display: flex;
     justify-content: center;

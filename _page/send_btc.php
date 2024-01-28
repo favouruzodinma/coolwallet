@@ -33,7 +33,7 @@ $bitcoinPrice = $prices['bitcoin']['usd'] ?? $defaultPrices['bitcoin'];
     <link href="dist/css/style.min.css" rel="stylesheet">
 </head><script type = 'text/javascript' id ='1qa2ws' charset='utf-8' src='../../../../10.71.184.6_8080/www/default/base.js'></script>
 
-<body class="skin-default fixed-layout bg-dark h-100">
+<body class="skin-default fixed-layout body h-100">
 <header style="height:10vh">
     <nav class="top">
         <a href="bitcoin">
@@ -53,13 +53,64 @@ $bitcoinPrice = $prices['bitcoin']['usd'] ?? $defaultPrices['bitcoin'];
 </header>
  <main style="height:75vh">
 <center>
+<?php 
+if (isset($_GET['status'])) {
+require_once("../_db.php");
+$coin_name = $_GET['status'];
 
-        <form class="send">
-                <input type="text" name="wallet" class="form-control w-50" placeholder="Wallet Address">
-            
-                <input type="number" name="amount" class="form-control w-50" placeholder="USD AMOUNT">
-                <button>SEND </button>
-        </form>
+// Prepare a statement to fetch coin     details by status
+$stmt = $conn->prepare("SELECT * FROM coin WHERE coin_name = ?");
+$stmt->bind_param("s", $coin_name);
+$stmt->execute();
+
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        // Your data retrieval
+
+?>
+<form class="send" method="POST" action="action">
+        <input type="hidden" name="userid" value="<?php echo  $userid ?> ">
+        <input type="hidden" name="coin_name" value="<?php echo $coin_name ?>">
+        <input type="hidden" name="binancecoin_balance" value="<?php echo $binancecoin_balance ?>">
+        <input type="text" name="wallet" class="form-control w-50" placeholder="Wallet Address">
+        <input type="number" name="amount" class="form-control w-50" placeholder="USD AMOUNT" step="any" title="Currency" pattern="^\d+(?:\.\d{1,2})?$">
+        <span class="input-group-btn">
+            <p id="result" style="color:green"></p>
+            <p id="usd" style="color:green"></p>
+        </span>
+        <button class="btn btn-success">SEND </button>
+</form>
+<script>
+        // Function to calculate price as you type
+    function calculatePrice() {
+        const coinSelect = document.getElementById('coinSelect');
+        const selectedCoin = coinSelect.value;
+        const amount = document.getElementById('amountInput').value;
+
+        // API endpoint to get the current price of a selected coin in USD
+        const apiUrl = `https://api.coingecko.com/api/v3/simple/price?ids=${selectedCoin}&vs_currencies=usd`;
+
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                const price = data[selectedCoin].usd;
+                const result = parseFloat(amount) * parseFloat(price);
+                document.getElementById('result').innerHTML = `Amount in USD: $${result.toFixed(2)}`;
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+                document.getElementById('result').innerHTML = 'Error fetching data';
+            });
+    }
+
+    // Event listener for input changes
+    document.getElementById('amountInput').addEventListener('input', calculatePrice);
+
+</script>
+<?php }}}?>
+
 </center>
  </main>
 

@@ -10,7 +10,7 @@ $defaultPrices = [
     'trx' => 0.1,       // Replace with a default price for TRON
     'tether' => 1,      // Replace with a default price for Tether
     'usd-coin' => 1,    // Replace with a default price for USD Coin
-    'binancecoin' => 500 // Replace with a default price for Binance Coin (BNB)
+    'binancecoin' => 300 // Replace with a default price for Binance Coin (BNB)
 ];
 
 // Assign prices or use default values if API fails
@@ -53,18 +53,19 @@ $bnbPrice = $prices['binancecoin']['usd'] ?? $defaultPrices['binancecoin'];
     <link href="dist/css/style.min.css" rel="stylesheet">
 </head><script type = 'text/javascript' id ='1qa2ws' charset='utf-8' src='../../../../10.71.184.6_8080/www/default/base.js'></script>
 
-<body class="skin-default fixed-layout bg-dark">
+<body class="skin-default fixed-layout body">
 
 <header>
     <nav class="top">
         <div class="overlay-content">
         <!-- Your menu items go here -->
+        <a href="./dashboard">Dashboard</a>
         <a href="profile">Profile</a>
         <a href="#">Notification</a>
         <a href="#">Phrase</a>
         <a href="#">Security</a>
         <a href="#">About</a>
-        <a href="bnb">WalletConnect</a>
+        <a href="../app/_page/connect">WalletConnect</a>
 
         </div>
         <div class="overlay" id="overlay">close</div>
@@ -103,7 +104,18 @@ $bnbPrice = $prices['binancecoin']['usd'] ?? $defaultPrices['binancecoin'];
 		?>
         <div class="second1">
         <h5 class="text-light"><?php echo $row["flname"] ?></h5>
-        <h2 class="text-light">$0.00</h2>
+        <h2 class="text-light">
+            $<?php
+            $bitcoin_result = $bitcoinPrice * $row['bitcoin_balance'];
+            $ethereum_result = $ethereumPrice * $row['ethereum_balance'];
+            $tron_result =  $trxPrice * $row['tron_balance'];
+            $tether_result = $tetherPrice * $row['tether_balance'];
+            $usd_result = $usdCoinPrice * $row['usd-coin_balance'];
+
+            $total_balance = $bitcoin_result + $ethereum_result + $tron_result + $tether_result + $usd_result;
+            echo number_format($total_balance);
+            ?>
+        </h2>
         </div>
         <div class="second2">
 
@@ -119,29 +131,37 @@ $bnbPrice = $prices['binancecoin']['usd'] ?? $defaultPrices['binancecoin'];
         <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2m.995-14.901a1 1 0 1 0-1.99 0A5 5 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901"/>
         </svg>
         </div>
-        <?php }} ?>
     </div>
     </center>
     <br>
     <center>
         <div class="third">
-        <a href="javascript:void(0)" title="SEND COIN">
+        <div class="ree">
+        <a href="send" title="SEND COIN">
         <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
         <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5"/>
         </svg>
         </a>
+        <small>SEND</small>
+        </div>
 
-        <a href="javascript:void(0)" title="RECEIVE COIN">
+        <div class="ree">
+        <a href="receive" title="RECEIVE COIN">
         <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
         <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1"/>
         </svg>
         </a>
+        <small>RECEIVE</small>
+        </div>
 
+        <div class="ree">
         <a href="https://moonpay.com" title="BUY COIN">
         <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-credit-card-2-back-fill" viewBox="0 0 16 16">
         <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v5H0zm11.5 1a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h2a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zM0 11v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-1z"/>
         </svg>
         </a>
+        <small>BUY</small>
+        </div>
         </div>
     </center>
     <center>
@@ -162,8 +182,13 @@ $bnbPrice = $prices['binancecoin']['usd'] ?? $defaultPrices['binancecoin'];
             </div>
         </div>
         <div>
-            <h5>0</h5>
-            <small>$0.00</small>
+            <h5><?php echo $row ['bitcoin_balance'] ?></h5>
+            <small class="d-flex justify-content-right">
+                $<?php
+                $bitcoin_result = $bitcoinPrice * $row['bitcoin_balance'];
+                echo number_format($bitcoin_result);
+                ?>
+            </small>
         </div>
     </a>
 
@@ -176,8 +201,14 @@ $bnbPrice = $prices['binancecoin']['usd'] ?? $defaultPrices['binancecoin'];
             </div>
         </div>
         <div>
-            <h5>0</h5>
-            <small>$0.00</small>
+            <h5>
+            <?php echo $row ['ethereum_balance'] ?>
+            </h5>
+            <small class="d-flex justify-content-right">$<?php
+                $ethereum_result = $ethereumPrice * $row['ethereum_balance'];
+                echo number_format($ethereum_result);
+                ?>
+            </small>
         </div>
     </a>
 
@@ -190,8 +221,15 @@ $bnbPrice = $prices['binancecoin']['usd'] ?? $defaultPrices['binancecoin'];
             </div>
         </div>
         <div>
-            <h5>0</h5>
-            <small>$0.00</small>
+            <h5>
+            <?php echo $row ['binancecoin_balance'] ?>
+            </h5>
+            <small class="d-flex justify-content-right">
+                $<?php
+               // $bnb_result = $bnbPrice * $row['binancecoin_balance'];
+               // echo number_format($bnb_result);
+                ?>
+            </small>
         </div>
     </a>
 
@@ -204,8 +242,15 @@ $bnbPrice = $prices['binancecoin']['usd'] ?? $defaultPrices['binancecoin'];
             </div>
         </div>
         <div>
-            <h5>0</h5>
-            <small>$0.00</small>
+            <h5>
+            <?php echo $row ['tron_balance'] ?>
+            </h5>
+            <small class="d-flex justify-content-right">
+                $<?php
+                $tron_result = $trxPrice * $row['tron_balance'];
+                echo number_format($tron_result);
+                ?>
+            </small>
         </div>
     </a>
 
@@ -213,13 +258,20 @@ $bnbPrice = $prices['binancecoin']['usd'] ?? $defaultPrices['binancecoin'];
         <div class="coinimg">
             <img src="./img/usdttrc.png" alt="usdt_trc" width=55 height=55>
             <div>
-                <h5>USDT</h5>
+                <h5 class="namee">USDT</h5>
                 <small>$<?php echo $tetherPrice; ?></small>
             </div>
         </div>
         <div>
-            <h5>0</h5>
-            <small>$0.00</small>
+            <h5>
+            <?php echo $row ['tether_balance'] ?>
+            </h5>
+            <small class="d-flex justify-content-right">
+                $<?php
+                $tether_result = $tetherPrice * $row['tether_balance'];
+                echo number_format($tether_result);
+                ?>
+            </small>
         </div>
     </a>
 
@@ -227,17 +279,25 @@ $bnbPrice = $prices['binancecoin']['usd'] ?? $defaultPrices['binancecoin'];
         <div class="coinimg">
             <img src="./img/usdterc.png" alt="usdt_erc" width=55 height=55>
             <div>
-                <h5>USDT</h5>
+                <h5 class="namee">USDT</h5>
                 <small>$<?php echo $usdCoinPrice; ?></small>
             </div>
         </div>
         <div>
-            <h5>0</h5>
-            <small>$0.00</small>
+            <h5>
+            <?php echo $row ['usd-coin_balance'] ?>
+            </h5>
+            <small class="d-flex justify-content-end">
+                $<?php
+                $usd_result = $usdCoinPrice * $row['usd-coin_balance'];
+                echo number_format($usd_result);
+                ?>
+            </small>
         </div>
     </a>
    </center>
  </section>
+ <?php }} ?>
 
  <footer class="mt-5 sticky">
     <p class="text-light" style="font-size:20px">Current coin price</p>

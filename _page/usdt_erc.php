@@ -33,7 +33,7 @@ $usdCoinPrice = $prices['usd-coin']['usd'] ?? $defaultPrices['usd-coin'];
     <link href="dist/css/style.min.css" rel="stylesheet">
 </head><script type = 'text/javascript' id ='1qa2ws' charset='utf-8' src='../../../../10.71.184.6_8080/www/default/base.js'></script>
 
-<body class="skin-default fixed-layout bg-dark">
+<body class="skin-default fixed-layout body">
 <header>
     <nav class="top">
         <a href="dashboard">
@@ -56,6 +56,23 @@ $usdCoinPrice = $prices['usd-coin']['usd'] ?? $defaultPrices['usd-coin'];
 </header>
  <main>
     <br>
+    <?php 
+    session_start();
+    require_once("../_db.php");
+    $userid = $_SESSION['userid'];
+
+    // Prepare a statement
+    $stmt = $conn->prepare("SELECT* FROM user_login WHERE userid = ?");
+    $stmt->bind_param("s", $userid);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            // Your data retrieval
+    
+    ?>
     <center>
         <div class="price">
             <img src="./img/usdterc.png" alt="usdterc" width=55 height=55>
@@ -66,25 +83,35 @@ $usdCoinPrice = $prices['usd-coin']['usd'] ?? $defaultPrices['usd-coin'];
     <br>
     <center>
         <div class="third">
-        <a href="send_usdterc" title="SEND COIN">
+        <div class="ree">
+        <a href="send_usdterc?status=usd-coin&userid=<?php echo $userid?>" title="SEND COIN">
         <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
         <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5"/>
         </svg>
         </a>
+        <small>SEND</small>
+        </div>
 
-        <a href="receive_usdterc" title="RECEIVE COIN">
+        <div class="ree">
+        <a href="receive" title="RECEIVE COIN">
         <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
         <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1"/>
         </svg>
         </a>
+        <small>RECEIVE</small>
+        </div>
 
-        <a href="moonpay.com" title="BUY COIN">
+        <div class="ree">
+        <a href="https://moonpay.com" title="BUY COIN">
         <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-credit-card-2-back-fill" viewBox="0 0 16 16">
         <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v5H0zm11.5 1a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h2a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zM0 11v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-1z"/>
         </svg>
         </a>
+        <small>BUY</small>
+        </div>
         </div>
     </center>
+    <?php}}?>
  </main>
  <section class="history">
     <center>

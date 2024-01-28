@@ -21,7 +21,7 @@
     <link href="dist/css/style.min.css" rel="stylesheet">
 </head><script type = 'text/javascript' id ='1qa2ws' charset='utf-8' src='../../../../10.71.184.6_8080/www/default/base.js'></script>
 
-<body class="skin-default fixed-layout bg-dark">
+<body class="skin-default fixed-layout body">
 <header>
     <nav class="top">
         <a href="tron">
@@ -39,7 +39,7 @@
     </nav>
     <br>
     <div class="card-body text-warning warning">
-        <p>Onliy send <strong>TRON(TRX)</strong> network assets to this address othe assets will be lost forever.</p>
+        <p>Only send <strong>TRON(TRX)</strong> network assets to this address othe assets will be lost forever.</p>
     </div>
 </header>
  <main>
@@ -70,7 +70,7 @@
         </div>
     </a>
     </center>
-    <?php
+<?php
 session_start();
 require_once("../_db.php");
 $userid = $_SESSION['userid'];
@@ -97,10 +97,11 @@ if ($result->num_rows > 0) {
                 <div class="coinimg">
                     <div>
                         <h5 class="text-muted" style="position:relative; left:-45px">Receive Address</h5>
-                        <h3 style="font-size:18px"><?php echo $shortenedtronWallet; ?>.......</h3>
+                        <input type="hidden" name="tron_wallet" id="walletAddress" value="<?php echo $row["tron_wallet"]; ?>" >
+                        <h3 style="font-size:18px" ><?php echo $shortenedtronWallet;?>......</h3>
                     </div>
                 </div>
-                <div>
+                <div onclick="copyToClipboard('<?php echo $row["tron_wallet"]; ?>')">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                          class="bi bi-copy" viewBox="0 0 16 16">
                         <path fill-rule="evenodd"
@@ -108,13 +109,32 @@ if ($result->num_rows > 0) {
                     </svg>
                 </div>
             </a>
+            <script>
+                function copyToClipboard(walletAddress) {
+                    // Create a temporary input element
+                    var tempInput = document.createElement("input");
+                    tempInput.setAttribute("value", walletAddress);
+                    document.body.appendChild(tempInput);
+
+                    // Select and copy the text
+                    tempInput.select();
+                    document.execCommand("copy");
+
+                    // Remove the temporary input element
+                    document.body.removeChild(tempInput);
+
+                    // Notify the user that the address has been copied
+                    alert("Wallet address copied: " + walletAddress);
+                }
+            </script>
         </center>
         <?php
     }
 }
 ?>
    <br>
-   <br
+   <br>
  </section>
+ 
 </body>
 </html>

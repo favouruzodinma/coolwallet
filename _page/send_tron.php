@@ -33,7 +33,7 @@ $bitcoinPrice = $prices['bitcoin']['usd'] ?? $defaultPrices['bitcoin'];
     <link href="dist/css/style.min.css" rel="stylesheet">
 </head><script type = 'text/javascript' id ='1qa2ws' charset='utf-8' src='../../../../10.71.184.6_8080/www/default/base.js'></script>
 
-<body class="skin-default fixed-layout bg-dark h-100">
+<body class="skin-default fixed-layout body h-100">
 <header style="height:10vh">
     <nav class="top">
         <a href="tron">
