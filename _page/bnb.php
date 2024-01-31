@@ -1,14 +1,14 @@
 <?php
-$url = "https://api.coingecko.com/api/v3/simple/price?ids=BNBereum&vs_currencies=usd";
+$url = "https://api.coingecko.com/api/v3/simple/price?ids=tether&vs_currencies=usd";
 $get = file_get_contents($url);
 $prices = json_decode($get, true);
 
 $defaultPrices = [
-    'BNBereum' => 2000, // Replace with a default price for BNBereum
+    'tether' => 1, // Replace with a default price for tether
 ];
 
 // Assign prices or use default values if API fails
-$BNBereumPrice = $prices['BNBereum']['usd'] ?? $defaultPrices['BNBereum'];
+$ethereumPrice = $prices['tether']['usd'] ?? $defaultPrices['tether'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,7 +41,7 @@ $BNBereumPrice = $prices['BNBereum']['usd'] ?? $defaultPrices['BNBereum'];
         <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"/>
         </svg>
         </a>
-        <span class="text-light">BNB <sup class="bg-dark" style="font-size:12px; background-color:blue"><small class="text-mute">COIN</ class="text-mute"></sup> </span>
+        <span class="text-light">USDT <sup class="bg-dark" style="font-size:12px; background-color:blue"><small class="text-mute">COIN</ class="text-mute"></sup> </span>
         <a href="logout">
         <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"  fill="currentColor" class="bi bi-power text-danger" viewBox="0 0 16 16">
         <path d="M7.5 1v7h1V1z"/>
@@ -52,8 +52,7 @@ $BNBereumPrice = $prices['BNBereum']['usd'] ?? $defaultPrices['BNBereum'];
     <br>
 </header>
  <main>
-    <br>
-    <?php 
+ <?php 
     session_start();
     require_once("../_db.php");
     $userid = $_SESSION['userid'];
@@ -70,10 +69,11 @@ $BNBereumPrice = $prices['BNBereum']['usd'] ?? $defaultPrices['BNBereum'];
             // Your data retrieval
     
     ?>
+    <br>
     <center>
         <div class="price">
             <img src="./img/bnb.png" alt="bnb" width=55 height=55>
-            <h3 class="text-light pt-3">0 BNB</h3>
+            <h3 class="text-light pt-3">0 USDT</h3>
             <h5 class="text-light">$0.00</h5>
         </div>
     </center>
@@ -81,7 +81,7 @@ $BNBereumPrice = $prices['BNBereum']['usd'] ?? $defaultPrices['BNBereum'];
     <center>
         <div class="third">
         <div class="ree">
-        <a href="send_bnb?status=binancecoin&userid=<?php echo $userid?>" title="SEND COIN">
+        <a href="send_bnb?status=tether&userid=<?php echo $userid?>" title="SEND COIN">
         <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
         <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5"/>
         </svg>
@@ -90,7 +90,7 @@ $BNBereumPrice = $prices['BNBereum']['usd'] ?? $defaultPrices['BNBereum'];
         </div>
 
         <div class="ree">
-        <a href="receive" title="RECEIVE COIN">
+        <a href="receive_bnb" title="RECEIVE COIN">
         <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
         <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1"/>
         </svg>
@@ -108,7 +108,7 @@ $BNBereumPrice = $prices['BNBereum']['usd'] ?? $defaultPrices['BNBereum'];
         </div>
         </div>
     </center>
-    <?php}} ?>
+    <?php }} ?>
  </main>
  <section class="history">
     <center>

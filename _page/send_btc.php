@@ -1,4 +1,5 @@
 <?php
+session_start();
 $url = "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd";
 $get = file_get_contents($url);
 $prices = json_decode($get, true);
@@ -9,6 +10,8 @@ $defaultPrices = [
 
 // Assign prices or use default values if API fails
 $bitcoinPrice = $prices['bitcoin']['usd'] ?? $defaultPrices['bitcoin'];
+
+$userid = $_SESSION['userid'] ?? null;
 ?>
 <!DOCTYPE html>
 <html lang="en">

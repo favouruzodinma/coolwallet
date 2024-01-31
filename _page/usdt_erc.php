@@ -1,14 +1,14 @@
 <?php
-$url = "https://api.coingecko.com/api/v3/simple/price?ids=usd-coin&vs_currencies=usd";
+$url = "https://api.coingecko.com/api/v3/simple/price?ids=tether&vs_currencies=usd";
 $get = file_get_contents($url);
 $prices = json_decode($get, true);
 
 $defaultPrices = [
-    'usd-coin' => 1     // Replace with a default price for USD Coin
+    'tether' => 1, // Replace with a default price for tether
 ];
 
 // Assign prices or use default values if API fails
-$usdCoinPrice = $prices['usd-coin']['usd'] ?? $defaultPrices['usd-coin'];
+$ethereumPrice = $prices['tether']['usd'] ?? $defaultPrices['tether'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -50,13 +50,9 @@ $usdCoinPrice = $prices['usd-coin']['usd'] ?? $defaultPrices['usd-coin'];
         </a>
     </nav>
     <br>
-    <!-- <div class="card-body text-warning warning">
-        <p>Note you must have a minimum of  0.7ETH in your Etheruem Wallet before transaction takes Place. Withdrawal won't be allowed.</p>
-    </div> -->
 </header>
  <main>
-    <br>
-    <?php 
+ <?php 
     session_start();
     require_once("../_db.php");
     $userid = $_SESSION['userid'];
@@ -73,6 +69,7 @@ $usdCoinPrice = $prices['usd-coin']['usd'] ?? $defaultPrices['usd-coin'];
             // Your data retrieval
     
     ?>
+    <br>
     <center>
         <div class="price">
             <img src="./img/usdterc.png" alt="usdterc" width=55 height=55>
@@ -93,7 +90,7 @@ $usdCoinPrice = $prices['usd-coin']['usd'] ?? $defaultPrices['usd-coin'];
         </div>
 
         <div class="ree">
-        <a href="receive" title="RECEIVE COIN">
+        <a href="receive_usdterc" title="RECEIVE COIN">
         <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
         <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1"/>
         </svg>
@@ -111,7 +108,7 @@ $usdCoinPrice = $prices['usd-coin']['usd'] ?? $defaultPrices['usd-coin'];
         </div>
         </div>
     </center>
-    <?php}}?>
+    <?php }} ?>
  </main>
  <section class="history">
     <center>

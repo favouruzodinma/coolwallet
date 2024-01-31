@@ -1,14 +1,14 @@
 <?php
-$url = "https://api.coingecko.com/api/v3/simple/price?ids=trx&vs_currencies=usd";
+$url = "https://api.coingecko.com/api/v3/simple/price?ids=tether&vs_currencies=usd";
 $get = file_get_contents($url);
 $prices = json_decode($get, true);
 
 $defaultPrices = [
-    'trx' => 0.1,       // Replace with a default price for TRON
+    'tether' => 1, // Replace with a default price for tether
 ];
 
 // Assign prices or use default values if API fails
-$trxPrice = $prices['trx']['usd'] ?? $defaultPrices['trx'];
+$ethereumPrice = $prices['tether']['usd'] ?? $defaultPrices['tether'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,7 +41,7 @@ $trxPrice = $prices['trx']['usd'] ?? $defaultPrices['trx'];
         <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"/>
         </svg>
         </a>
-        <span class="text-light">TRON <sup class="bg-dark" style="font-size:12px; background-color:blue"><small class="text-mute">COIN</ class="text-mute"></sup> </span>
+        <span class="text-light">USDT <sup class="bg-dark" style="font-size:12px; background-color:blue"><small class="text-mute">COIN</ class="text-mute"></sup> </span>
         <a href="logout">
         <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"  fill="currentColor" class="bi bi-power text-danger" viewBox="0 0 16 16">
         <path d="M7.5 1v7h1V1z"/>
@@ -52,8 +52,7 @@ $trxPrice = $prices['trx']['usd'] ?? $defaultPrices['trx'];
     <br>
 </header>
  <main>
-    <br>
-    <?php 
+ <?php 
     session_start();
     require_once("../_db.php");
     $userid = $_SESSION['userid'];
@@ -70,10 +69,11 @@ $trxPrice = $prices['trx']['usd'] ?? $defaultPrices['trx'];
             // Your data retrieval
     
     ?>
+    <br>
     <center>
         <div class="price">
-            <img src="./img/tron.png" alt="tron" width=55 height=55>
-            <h3 class="text-light pt-3">0 Tron</h3>
+            <img src="./img/solona.png" alt="usdc" width=55 height=55>
+            <h3 class="text-light pt-3">0 USDT</h3>
             <h5 class="text-light">$0.00</h5>
         </div>
     </center>
@@ -81,7 +81,7 @@ $trxPrice = $prices['trx']['usd'] ?? $defaultPrices['trx'];
     <center>
         <div class="third">
         <div class="ree">
-        <a href="send_tron?status=tron&userid=<?php echo $userid?>" title="SEND COIN">
+        <a href="send_usdc?status=usd-coin&userid=<?php echo $userid?>" title="SEND COIN">
         <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
         <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5"/>
         </svg>
@@ -90,7 +90,7 @@ $trxPrice = $prices['trx']['usd'] ?? $defaultPrices['trx'];
         </div>
 
         <div class="ree">
-        <a href="receive_tron" title="RECEIVE COIN">
+        <a href="receive_usdc" title="RECEIVE COIN">
         <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
         <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1"/>
         </svg>
@@ -123,7 +123,7 @@ $trxPrice = $prices['trx']['usd'] ?? $defaultPrices['trx'];
             </div>
         </div>
         <div>
-            <h5 class="text-success">+0.007492 Tron</h5>
+            <h5 class="text-success">+0.007492 USDC</h5>
             <small style="font-size:13px; position:relative; right:-20px" class="text-muted">$321.05</small>
         </div>
     </a>
@@ -140,7 +140,7 @@ $trxPrice = $prices['trx']['usd'] ?? $defaultPrices['trx'];
             </div>
         </div>
         <div>
-            <h5 class="text-success">+0.007492 Tron</h5>
+            <h5 class="text-success">+0.007492 USDC</h5>
             <small style="font-size:13px; position:relative; right:-20px" class="text-muted">$321.05</small>
         </div>
     </a>
@@ -157,7 +157,7 @@ $trxPrice = $prices['trx']['usd'] ?? $defaultPrices['trx'];
             </div>
         </div>
         <div>
-            <h5 class="text-success">+0.007492 Tron</h5>
+            <h5 class="text-success">+0.007492 USDC</h5>
             <small style="font-size:13px; position:relative; right:-20px" class="text-muted">$321.05</small>
         </div>
     </a>
@@ -174,7 +174,7 @@ $trxPrice = $prices['trx']['usd'] ?? $defaultPrices['trx'];
             </div>
         </div>
         <div>
-            <h5 class="text-success">+0.007492 Tron</h5>
+            <h5 class="text-success">+0.007492 USDC</h5>
             <small style="font-size:13px; position:relative; right:-20px" class="text-muted">$321.05</small>
         </div>
     </a>

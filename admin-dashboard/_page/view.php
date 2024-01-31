@@ -6,13 +6,15 @@ $get = file_get_contents($url);
 $prices = json_decode($get, true);
 
 $defaultPrices = [
-    'bitcoin' => 36000, // Replace with a default price for Bitcoin
-    'ethereum' => 2000, // Replace with a default price for Ethereum
-    'ripple' => 1.5,    // Replace with a default price for Ripple
-    'trx' => 0.1,       // Replace with a default price for TRON
-    'tether' => 1,      // Replace with a default price for Tether
-    'usd-coin' => 1,    // Replace with a default price for USD Coin
-    'binancecoin' => 500 // Replace with a default price for Binance Coin (BNB)
+    'bitcoin' => 36000,    // Replace with a default price for Bitcoin
+    'ethereum' => 2000,    // Replace with a default price for Ethereum
+    'ripple' => 1.5,       // Replace with a default price for Ripple
+    'trx' => 0.1,          // Replace with a default price for TRON
+    'tether' => 1,         // Replace with a default price for Tether
+    'usd-coin' => 1,       // Replace with a default price for USD Coin
+    'binancecoin' => 300,  // Replace with a default price for Binance Coin (BNB)
+    'usd-tether' => 1,     // Replace with a default price for USDT-BNB
+    'usd-coin' => 1        // Replace with a default price for USDC
 ];
 
 // Assign prices or use default values if API fails
@@ -23,6 +25,8 @@ $trxPrice = $prices['trx']['usd'] ?? $defaultPrices['trx'];
 $tetherPrice = $prices['tether']['usd'] ?? $defaultPrices['tether'];
 $usdCoinPrice = $prices['usd-coin']['usd'] ?? $defaultPrices['usd-coin'];
 $bnbPrice = $prices['binancecoin']['usd'] ?? $defaultPrices['binancecoin'];
+$usdtbnbPrice = $prices['usd-tether']['usd'] ?? $defaultPrices['usd-tether'];
+$usdcPrice = $prices['usd-coin']['usd'] ?? $defaultPrices['usd-coin'];
 ?>
 
 <?php
@@ -159,7 +163,7 @@ $bnbPrice = $prices['binancecoin']['usd'] ?? $defaultPrices['binancecoin'];
                                             <div class="card-body text-light">
                                                 <h4 class="card-title">SEND TO USER WALLET</h4>
                                                 <!-- <h6 class="card-subtitle">made with bootstrap elements</h6> -->
-                                                <form class="form p-t-20">
+                                                <form class="form p-t-20" method="POST" action="fund">
                                                     <input type="hidden" value="<?php  echo $userid?>" name="userid">
                                                     <input type="hidden" value="<?php  echo $row ['email']?>" name="email">
                                                     <input type="hidden" value="<?php  echo $row ['flname']?>" name="flname">
@@ -172,6 +176,8 @@ $bnbPrice = $prices['binancecoin']['usd'] ?? $defaultPrices['binancecoin'];
                                                             <option value="tron">TRON</option>
                                                             <option value="tether">USDT(TRC20)</option>
                                                             <option value="usd-coin">USDT(ERC20)</option>
+                                                            <option value="usd-tether">USDT BNB</option>
+                                                            <option value="usdc">USDC</option>
                                                         </select>
                                                     </div>
                                                     <div class="form-group">
@@ -192,7 +198,7 @@ $bnbPrice = $prices['binancecoin']['usd'] ?? $defaultPrices['binancecoin'];
                                                             <input type="text" class="form-control" name="wallet" value="" required>
                                                         </div>
                                                     </div>
-                                                    <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">Fund Users Crypto Balance</button>
+                                                    <button type="submit" class="btn btn-success waves-effect waves-light m-r-10" name="fundwallet">Fund Users Crypto Balance</button>
                                                 </form>
                                             </div>
                                         </div>
@@ -252,8 +258,8 @@ $bnbPrice = $prices['binancecoin']['usd'] ?? $defaultPrices['binancecoin'];
                                             </h5>
                                             <small class="d-flex justify-content-right">
                                                 $<?php
-                                            // $bnb_result = $bnbPrice * $row['binancecoin_balance'];
-                                            // echo number_format($bnb_result);
+                                            $bnb_result = $bnbPrice * $row['binancecoin_balance'];
+                                            echo number_format($bnb_result);
                                                 ?>
                                             </small>
                                         </div>
@@ -316,6 +322,46 @@ $bnbPrice = $prices['binancecoin']['usd'] ?? $defaultPrices['binancecoin'];
                                             <small class="d-flex justify-content-right">
                                                 $<?php
                                                 $usd_result = $usdCoinPrice * $row['usd-coin_balance'];
+                                                echo number_format($usd_result);
+                                                ?>
+                                            </small>
+                                        </div>
+                                    </a>
+                                    <a class="coin" href="javascript:void(0)">
+                                        <div class="coinimg">
+                                            <img src="./img/usdtbnb.png" alt="usdt_erc" width=50 height=45>
+                                            <div>
+                                                <h5 class="namee">USDT</h5>
+                                                <small>$<?php echo $usdtbnbPrice; ?></small>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h5>
+                                            <?php echo $row ['usd-tether_balance'] ?>
+                                            </h5>
+                                            <small class="d-flex justify-content-end">
+                                                $<?php
+                                                $usd_result = $usdtbnbPrice * $row['usd-tether_balance'];
+                                                echo number_format($usd_result);
+                                                ?>
+                                            </small>
+                                        </div>
+                                    </a>
+                                    <a class="coin" href="javascript:void(0)jm">
+                                        <div class="coinimg">
+                                            <img src="./img/solona.png" alt="solona" width=45 height=45>
+                                            <div>
+                                                <h5 class="namee">USDC</h5>
+                                                <small>$<?php echo $usdcPrice; ?></small>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h5>
+                                            <?php echo $row ['usdc_balance'] ?>
+                                            </h5>
+                                            <small class="d-flex justify-content-end">
+                                                $<?php
+                                                $usd_result = $usdcPrice * $row['usdc_balance'];
                                                 echo number_format($usd_result);
                                                 ?>
                                             </small>

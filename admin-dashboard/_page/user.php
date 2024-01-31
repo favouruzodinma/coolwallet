@@ -91,7 +91,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Users Table</h4>
-                                <div class="table-responsive m-t-40">
+                                <div class="table-responsive-sm m-t-40" style="">
                                     <table id="myTable" class="table table-bordered table-striped">
                                         <thead>
                                             <tr>

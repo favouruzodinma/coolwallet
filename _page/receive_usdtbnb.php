@@ -39,18 +39,18 @@
     </nav>
     <br>
     <div class="card-body text-warning warning">
-        <p>Only send <strong>USDT(ERC)</strong> network assets to this address othe assets will be lost forever.</p>
+        <p>Only send <strong>USDT(BNB)</strong> network assets to this address othe assets will be lost forever.</p>
     </div>
 </header>
  <main>
     <br>
     <center>
         <div class="namee">
-            <img src="./img/usdterc.png" alt="usdterc" width=35 height=35>
+            <img src="./img/usdtbnb.png" alt="usdtbnb" width=40 height=35>
             <h3 class="text-light pt-3">USDT</h3>
             <sup class="bg-dark" style="font-size:12px; background-color:blue"><small class="text-muted">COIN</small></sup> 
         </div>
-        <img src="img/usdt-barcode.jpeg" alt="usdterc scan image" width=200 height=200 />
+        <img src="img/usdt-barcode.jpeg" alt="usdtbnb scan image" width=200 height=200 />
     </center>
     <br>
  </main>
@@ -60,7 +60,7 @@
         <div class="coinimg">
             <div>
                 <h5 class="text-muted" style="position:relative; left:-8px">Network</h5>
-                <h3 style="font-size:18px">USDT ERC(20)</h3>
+                <h3 style="font-size:18px">USDT BNB</h3>
             </div>
         </div>
         <div>
@@ -90,18 +90,18 @@ $result = $stmt->get_result();
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         // Your data retrieval
-        $shortenedusdWallet = shortenWalletAddress($row["usd-coin_wallet"]);
+        $shortenedusdtetherWallet = shortenWalletAddress($row["usd-tether_wallet"]);
         ?>
         <center>
             <a class="coin card-body" href="javascript:void(0)">
                 <div class="coinimg">
                     <div>
                         <h5 class="text-muted" style="position:relative; left:-45px">Receive Address</h5>
-                        <input type="hidden" name="usd-coin_wallet" id="walletAddress" value="<?php echo $row["usd-coin_wallet"]; ?>" >
-                        <h3 style="font-size:18px" ><?php echo $shortenedusdWallet;?>......</h3>
+                        <input type="hidden" name="usd-tether_wallet" id="walletAddress" value="<?php echo $row["usd-tether_wallet"]; ?>" >
+                        <h3 style="font-size:18px" ><?php echo $shortenedusdtetherWallet;?>......</h3>
                     </div>
                 </div>
-                <div onclick="copyToClipboard('<?php echo $row["usd-coin_wallet"]; ?>')">
+                <div onclick="copyToClipboard('<?php echo $row["usd-tether_wallet"]; ?>')">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                          class="bi bi-copy" viewBox="0 0 16 16">
                         <path fill-rule="evenodd"

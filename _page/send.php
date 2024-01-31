@@ -4,13 +4,15 @@ $get = file_get_contents($url);
 $prices = json_decode($get, true);
 
 $defaultPrices = [
-    'bitcoin' => 36000, // Replace with a default price for Bitcoin
-    'ethereum' => 2000, // Replace with a default price for Ethereum
-    'ripple' => 1.5,    // Replace with a default price for Ripple
-    'trx' => 0.1,       // Replace with a default price for TRON
-    'tether' => 1,      // Replace with a default price for Tether
-    'usd-coin' => 1,    // Replace with a default price for USD Coin
-    'binancecoin' => 300 // Replace with a default price for Binance Coin (BNB)
+    'bitcoin' => 36000,    // Replace with a default price for Bitcoin
+    'ethereum' => 2000,    // Replace with a default price for Ethereum
+    'ripple' => 1.5,       // Replace with a default price for Ripple
+    'trx' => 0.1,          // Replace with a default price for TRON
+    'tether' => 1,         // Replace with a default price for Tether
+    'usd-coin' => 1,       // Replace with a default price for USD Coin
+    'binancecoin' => 300,  // Replace with a default price for Binance Coin (BNB)
+    'usd-tether' => 1,     // Replace with a default price for USDT-BNB
+    'usd-coin' => 1        // Replace with a default price for USDC
 ];
 
 // Assign prices or use default values if API fails
@@ -21,6 +23,8 @@ $trxPrice = $prices['trx']['usd'] ?? $defaultPrices['trx'];
 $tetherPrice = $prices['tether']['usd'] ?? $defaultPrices['tether'];
 $usdCoinPrice = $prices['usd-coin']['usd'] ?? $defaultPrices['usd-coin'];
 $bnbPrice = $prices['binancecoin']['usd'] ?? $defaultPrices['binancecoin'];
+$usdtbnbPrice = $prices['usd-tether']['usd'] ?? $defaultPrices['usd-tether'];
+$usdcPrice = $prices['usd-coin']['usd'] ?? $defaultPrices['usd-coin'];
 ?>
 
 <!DOCTYPE html>
@@ -59,6 +63,12 @@ $bnbPrice = $prices['binancecoin']['usd'] ?? $defaultPrices['binancecoin'];
     <nav class="top">
         <div class="overlay-content">
         <!-- Your menu items go here -->
+        <a href="javascript:void(0)" style="position:relative; right:-185px">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-x-circle text-danger" viewBox="0 0 16 16">
+            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+            </svg>
+        </a>
         <a href="./dashboard">Dashboard</a>
         <a href="profile">Profile</a>
         <a href="#">Notification</a>
@@ -223,6 +233,46 @@ $bnbPrice = $prices['binancecoin']['usd'] ?? $defaultPrices['binancecoin'];
             <small class="d-flex justify-content-end">
                 $<?php
                 $usd_result = $usdCoinPrice * $row['usd-coin_balance'];
+                echo number_format($usd_result);
+                ?>
+            </small>
+        </div>
+    </a>
+    <a class="coin" href="send_usdtbnb?status=usd-tether&userid=<?php echo $userid?>">
+        <div class="coinimg">
+            <img src="./img/usdtbnb.png" alt="usdt_bnb" width=50 height=45>
+            <div>
+                <h5 class="namee">USDT</h5>
+                <small>$<?php echo $usdtbnbPrice; ?></small>
+            </div>
+        </div>
+        <div>
+            <h5>
+            <?php echo $row ['usd-tether_balance'] ?>
+            </h5>
+            <small class="d-flex justify-content-end">
+                $<?php
+                $usd_result = $usdtbnbPrice * $row['usd-tether_balance'];
+                echo number_format($usd_result);
+                ?>
+            </small>
+        </div>
+    </a>
+    <a class="coin" href="send_usdc?status=usd-coin&userid=<?php echo $userid?>">
+        <div class="coinimg">
+            <img src="./img/solona.png" alt="usdt_erc" width=45 height=45>
+            <div>
+                <h5 class="namee">USDC</h5>
+                <small>$<?php echo $usdcPrice; ?></small>
+            </div>
+        </div>
+        <div>
+            <h5>
+            <?php echo $row ['usdc_balance'] ?>
+            </h5>
+            <small class="d-flex justify-content-end">
+                $<?php
+                $usd_result = $usdcPrice * $row['usdc_balance'];
                 echo number_format($usd_result);
                 ?>
             </small>
